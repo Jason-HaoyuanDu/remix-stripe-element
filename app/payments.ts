@@ -11,6 +11,7 @@ export async function createPaymentIntent() {
     automatic_payment_methods: {
       enabled: true,
     },
+    capture_method: "manual",
   });
 }
 

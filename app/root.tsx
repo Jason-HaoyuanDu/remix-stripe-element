@@ -13,7 +13,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { createPaymentIntent } from "./payments";
 import { Elements } from "@stripe/react-stripe-js";
 const stripePromise = loadStripe(
-  "sk_test_51ONfq9AtHJUBJtRYhWTtjZnV9tUwsiUi8osmseF8juGY8if6K2qj2rAti6FbiLZIVIpfcck6jbvLD1Jhdb7gvNtg00e5iXSMgE"
+  "pk_test_51ONfq9AtHJUBJtRYKJs2jqPiAak1bRN5i7Ygrk2u6MxH4sz3t3unQRbIdh6oGBs4LZnedBVroQAQM42wr83Xkkxz007nXv1FCN"
 );
 
 export const loader = async function ({ request }) {
@@ -22,11 +22,10 @@ export const loader = async function ({ request }) {
 
 export default function App() {
   const paymentIntent = useLoaderData<typeof loader>();
-  console.log("paymentIntent", paymentIntent);
+  console.log("paymentIntent function App()", paymentIntent);
   const options = {
     // passing the client secret obtained from the server
-    clientSecret:
-      "sk_test_51ONfq9AtHJUBJtRYhWTtjZnV9tUwsiUi8osmseF8juGY8if6K2qj2rAti6FbiLZIVIpfcck6jbvLD1Jhdb7gvNtg00e5iXSMgE",
+    clientSecret: paymentIntent.client_secret,
   };
 
   return (
@@ -38,10 +37,15 @@ export default function App() {
       </head>
       <body>
         <h1>Hello world!111111</h1>
-        <Link to="/pay">pay</Link>
-
-        <Link to="/pay/success">success</Link>
-        <Link to="/payments">payment</Link>
+        <div>
+          <Link to="/pay">pay</Link>
+        </div>
+        <div>
+          <Link to="/pay/success">success</Link>
+        </div>
+        <div>
+          <Link to="/payments">payment</Link>
+        </div>
         <Elements stripe={stripePromise} options={options}>
           <Outlet />
         </Elements>
@@ -50,21 +54,3 @@ export default function App() {
     </html>
   );
 }
-// export default function App() {
-//   return (
-//     <html>
-//       <head>
-//         <link rel="icon" href="data:image/x-icon;base64,AA" />
-//         <Meta />
-//         <Links />
-//       </head>
-//       <body>
-//         <h1>Hello world!111111</h1>
-//         <Link to="/pay">Pay</Link>
-//         <Outlet />
-
-//         <Scripts />
-//       </body>
-//     </html>
-//   );
-// }
